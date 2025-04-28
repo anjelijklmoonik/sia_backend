@@ -23,34 +23,44 @@ model AcademicYear {
 //---------------------------------------------------------------------------------------------------------------//
 
 model StudentProfil {
-  id             Int           @id @default(autoincrement())
-  foto           String?
-  nama           String
-  noIndukSiswa   String        @unique
-  sekolah        String
-  kelas          String
-  jurusanId      Int?
-  Jurusan        Jurusan?      @relation(fields: [jurusanId], references: [id])
-  alamat         String
-  ttl            String
-  noTelp         String?
-  email          String?       @unique
-  namaAyah       String?
-  namaIbu        String?
-  noTelpAyah     String?
-  noTelpIbu      String?
-  namaWali       String?
-  noTelpWali     String?
-  jenisKelamin   String
-  agama          String?
-  pencapaian     Pencapaian[]
-  users          Users[]
-  academicYearId Int?
-  academicYear   AcademicYear? @relation(fields: [academicYearId], references: [id])
-  Keuangan       Keuangan?
-  MemberKelas    MemberKelas[]
-  Absensi        Absensi[]
-  Nilai          Nilai[]
+  id                   Int           @id @default(autoincrement())
+  foto                 String?
+  nama                 String
+  noIndukSiswa         String        @unique
+  sekolah              String
+  kelas                String
+  jurusanId            Int?
+  Jurusan              Jurusan?      @relation(fields: [jurusanId], references: [id])
+  alamat               String
+  ttl                  String
+  noTelp               String?
+  email                String?       @unique
+  namaAyah             String?
+  namaIbu              String?
+  noTelpAyah           String?
+  noTelpIbu            String?
+  namaWali             String?
+  noTelpWali           String?
+  jenisKelamin         String
+  agama                String?
+  pendidikanSebelumnya String?
+  pekerjaanAyah        String?
+  pekerjaanIbu         String?
+  jalanOrtu            String?
+  kelurahanOrtu        String?
+  kecamatanOrtu        String?
+  kabupatenOrtu        String?
+  provinsiOrtu         String?
+  pekerjaanWali        String?
+  alamatWali           String?
+  pencapaian           Pencapaian[]
+  users                Users[]
+  academicYearId       Int?
+  academicYear         AcademicYear? @relation(fields: [academicYearId], references: [id])
+  Keuangan             Keuangan?
+  MemberKelas          MemberKelas[]
+  Absensi              Absensi[]
+  Nilai                Nilai[]
 }
 
 model Jurusan {

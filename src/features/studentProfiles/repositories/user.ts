@@ -19,6 +19,16 @@ export const createStudentProfile = async (data: {
   namaWali?: string | null;
   noTelpWali?: string | null;
   agama?: string | null;
+  pendidikanSebelumnya?: string | null;
+  pekerjaanAyah?: string | null;
+  pekerjaanIbu?: string | null;
+  jalanOrtu?: string | null;
+  kelurahanOrtu?: string | null;
+  kecamatanOrtu?: string | null;
+  kabupatenOrtu?: string | null;
+  provinsiOrtu?: string | null;
+  pekerjaanWali?: string | null;
+  alamatWali?: string | null;
 }) => {
   return await prisma.studentProfil.create({
     data: {
@@ -44,6 +54,16 @@ export const createStudentProfile = async (data: {
       namaWali: data.namaWali ?? null,
       noTelpWali: data.noTelpWali ?? null,
       agama: data.agama ?? null,
+      pendidikanSebelumnya: data.pendidikanSebelumnya ?? null,
+      pekerjaanAyah: data.pekerjaanAyah ?? null,
+      pekerjaanIbu: data.pekerjaanIbu ?? null,
+      jalanOrtu: data.jalanOrtu ?? null,
+      kelurahanOrtu: data.kelurahanOrtu ?? null,
+      kecamatanOrtu: data.kecamatanOrtu ?? null,
+      kabupatenOrtu: data.kabupatenOrtu ?? null,
+      provinsiOrtu: data.provinsiOrtu ?? null,
+      pekerjaanWali: data.pekerjaanWali ?? null,
+      alamatWali: data.alamatWali ?? null,
     },
     include: {
       Jurusan: true,
@@ -121,6 +141,16 @@ export const updateStudentProfileById = async (id: number, data: any) => {
     noTelpWali: data.noTelpWali ?? existingProfile.noTelpWali,
     agama: data.agama ?? existingProfile.agama,
     academicYearId: data.academicYearId ?? existingProfile.academicYearId,
+    pendidikanSebelumnya: data.pendidikanSebelumnya ?? existingProfile.pendidikanSebelumnya,
+    pekerjaanAyah: data.pekerjaanAyah ?? existingProfile.pekerjaanAyah,
+    pekerjaanIbu: data.pekerjaanIbu ?? existingProfile.pekerjaanIbu,
+    jalanOrtu: data.jalanOrtu ?? existingProfile.jalanOrtu,
+    kelurahanOrtu: data.kelurahanOrtu ?? existingProfile.kelurahanOrtu,
+    kecamatanOrtu: data.kecamatanOrtu ?? existingProfile.kecamatanOrtu,
+    kabupatenOrtu: data.kabupatenOrtu ?? existingProfile.kabupatenOrtu,
+    provinsiOrtu: data.provinsiOrtu ?? existingProfile.provinsiOrtu,
+    pekerjaanWali: data.pekerjaanWali ?? existingProfile.pekerjaanWali,
+    alamatWali: data.alamatWali ?? existingProfile.alamatWali,
   };
 
   // Lakukan update ke database

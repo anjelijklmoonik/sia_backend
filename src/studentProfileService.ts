@@ -25,6 +25,16 @@ studentProfile.post("/studentProfil", async (c) => {
     namaWali,
     noTelpWali,
     academicYear,
+    pendidikanSebelumnya,
+    pekerjaanAyah,
+    pekerjaanIbu,
+    jalanOrtu,
+    kelurahanOrtu,
+    kecamatanOrtu,
+    kabupatenOrtu,
+    provinsiOrtu,
+    pekerjaanWali,
+    alamatWali,
   } = await c.req.json();
 
   try {
@@ -57,6 +67,16 @@ studentProfile.post("/studentProfil", async (c) => {
             total: 0,
           },
         },
+        pendidikanSebelumnya,
+        pekerjaanAyah,
+        pekerjaanIbu,
+        jalanOrtu,
+        kelurahanOrtu,
+        kecamatanOrtu,
+        kabupatenOrtu,
+        provinsiOrtu,
+        pekerjaanWali,
+        alamatWali,
       },
     });
     return c.json(newProfil, 201);
@@ -117,6 +137,16 @@ studentProfile.put("/studentProfil/:id", async (c) => {
     namaWali,
     noTelpWali,
     academicYear,
+    pendidikanSebelumnya,
+    pekerjaanAyah,
+    pekerjaanIbu,
+    jalanOrtu,
+    kelurahanOrtu,
+    kecamatanOrtu,
+    kabupatenOrtu,
+    provinsiOrtu,
+    pekerjaanWali,
+    alamatWali,
   } = await c.req.json();
   try {
     const updateStudentProfil = await prisma.studentProfil.update({
@@ -141,6 +171,16 @@ studentProfile.put("/studentProfil/:id", async (c) => {
         namaWali,
         noTelpWali,
         academicYear: { connect: { id: academicYear } },
+        pendidikanSebelumnya,
+        pekerjaanAyah,
+        pekerjaanIbu,
+        jalanOrtu,
+        kelurahanOrtu,
+        kecamatanOrtu,
+        kabupatenOrtu,
+        provinsiOrtu,
+        pekerjaanWali,
+        alamatWali,
       },
     });
     return c.json(updateStudentProfil);

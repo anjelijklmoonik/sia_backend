@@ -90,7 +90,17 @@ export const createStudentProfileController = async (c: Context) => {
       noTelpAyah,
       noTelpIbu,
       namaWali,
-      noTelpWali
+      noTelpWali,
+      pendidikanSebelumnya,
+      pekerjaanAyah,
+      pekerjaanIbu,
+      jalanOrtu,
+      kelurahanOrtu,
+      kecamatanOrtu,
+      kabupatenOrtu,
+      provinsiOrtu,
+      pekerjaanWali,
+      alamatWali,
     } = await c.req.json();
 
     if (
@@ -125,7 +135,17 @@ export const createStudentProfileController = async (c: Context) => {
       noTelpAyah,
       noTelpIbu,
       namaWali,
-      noTelpWali
+      noTelpWali,
+      pendidikanSebelumnya,
+      pekerjaanAyah,
+      pekerjaanIbu,
+      jalanOrtu,
+      kelurahanOrtu,
+      kecamatanOrtu,
+      kabupatenOrtu,
+      provinsiOrtu,
+      pekerjaanWali,
+      alamatWali,
     };
 
     const newProfile = await createProfileService(profileData);
