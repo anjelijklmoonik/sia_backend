@@ -154,15 +154,27 @@ model Absensi {
 
 //---------------------------------------------------------------------------------------------------------------//
 
+// model Nilai {
+//   id              Int           @id @default(autoincrement())
+//   skor            Float
+//   mapelKelasId    Int
+//   memberKelasId   Int
+//   studentProfilId Int
+//   MemberKelas     MemberKelas   @relation(fields: [memberKelasId], references: [id])
+//   MapelKelas      MapelKelas    @relation(fields: [mapelKelasId], references: [id])
+//   StudentProfil   StudentProfil @relation(fields: [studentProfilId], references: [id])
+// }
+
 model Nilai {
-  id              Int           @id @default(autoincrement())
-  skor            Float
-  mapelKelasId    Int
-  memberKelasId   Int
-  studentProfilId Int
-  MemberKelas     MemberKelas   @relation(fields: [memberKelasId], references: [id])
-  MapelKelas      MapelKelas    @relation(fields: [mapelKelasId], references: [id])
-  StudentProfil   StudentProfil @relation(fields: [studentProfilId], references: [id])
+  id                Int           @id @default(autoincrement())
+  skor              Float
+  mapelKelasId      Int
+  memberKelasId     Int
+  studentProfilId   Int
+  capaianKompetensi String?
+  MemberKelas       MemberKelas   @relation(fields: [memberKelasId], references: [id])
+  MapelKelas        MapelKelas    @relation(fields: [mapelKelasId], references: [id])
+  StudentProfil     StudentProfil @relation(fields: [studentProfilId], references: [id])
 }
 
 // model Nilai {

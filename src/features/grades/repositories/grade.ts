@@ -1,40 +1,11 @@
 import { Prisma } from "@prisma/client";
 import prisma from "../../../configs/database";
 
-// export const nilaiRepository = {
-//   // Menambahkan nilai baru
-//   async create(data: { skor: number; mapelId: number; memberKelasId: number }) {
-//     return prisma.nilai.create({ data });
-//   },
-
-//   // Mengambil semua nilai
-//   async getAll() {
-//     return prisma.nilai.findMany({ include: { MemberKelas: true } });
-//   },
-
-//   // Mengambil nilai berdasarkan ID
-//   async getById(id: number) {
-//     return prisma.nilai.findUnique({
-//       where: { id },
-//       include: { MemberKelas: true },
-//     });
-//   },
-
-//   // Mengupdate nilai
-//   async update(id: number, data: { skor?: number; mapelId?: number }) {
-//     return prisma.nilai.update({ where: { id }, data });
-//   },
-
-//   // Menghapus nilai
-//   async delete(id: number) {
-//     return prisma.nilai.delete({ where: { id } });
-//   },
-// };
-
 export const createNilai = async (
-  studentProfileId: number, // Gunakan studentProfileId
+  studentProfileId: number,
   mapelKelasId: number,
-  skor: number
+  skor: number,
+  capaianKompetensi?: string  // Added optional capaianKompetensi parameter
 ) => {
   // Pastikan skor dalam rentang yang valid
   if (typeof skor !== "number" || skor < 0 || skor > 100) {
@@ -66,6 +37,7 @@ export const createNilai = async (
       memberKelasId: member.id,
       mapelKelasId,
       skor,
+      capaianKompetensi,  // Add the new field
       studentProfilId: studentProfileId,
     },
   });
@@ -92,10 +64,17 @@ export const getNilaiByKelas = async (kelasId: number, semester: string) => {
   });
 };
 
-export const updateNilai = async (id: number, skor: number) => {
+export const updateNilai = async (
+  id: number, 
+  skor: number,
+  capaianKompetensi?: string  // Added optional parameter for updating
+) => {
   return prisma.nilai.update({
     where: { id },
-    data: { skor },
+    data: { 
+      skor,
+      ...(capaianKompetensi !== undefined && { capaianKompetensi })  // Only update if provided
+    },
   });
 };
 
@@ -105,13 +84,14 @@ export const getGradesLessonByStudent = async (studentId: number) => {
       StudentProfil: {
         MemberKelas: {
           some: {
-            studentId: studentId, // Menyesuaikan dengan kelas student
+            studentId: studentId,
           },
         },
       },
     },
     select: {
       skor: true,
+      capaianKompetensi: true,  // Include capaianKompetensi in selection
       MapelKelas: {
         select: {
           Mapel: {
@@ -124,12 +104,15 @@ export const getGradesLessonByStudent = async (studentId: number) => {
     },
   });
 
-  // **Memformat response agar sesuai dengan permintaan**
-  const formattedResponse: Record<string, { skor: number }> = {};
+  // Format response to include capaianKompetensi
+  const formattedResponse: Record<string, { skor: number, capaianKompetensi?: string }> = {};
 
   grades.forEach((grade) => {
-    const subjectName = grade.MapelKelas.Mapel.namaMapel || "Unknown"; // Jaga-jaga jika null
-    formattedResponse[subjectName] = { skor: grade.skor };
+    const subjectName = grade.MapelKelas.Mapel.namaMapel || "Unknown";
+    formattedResponse[subjectName] = { 
+      skor: grade.skor,
+      ...(grade.capaianKompetensi && { capaianKompetensi: grade.capaianKompetensi })
+    };
   });
 
   return formattedResponse;
@@ -160,6 +143,7 @@ export const getFormData = async () => {
                                 nilai: {
                                   select: {
                                     skor: true,
+                                    capaianKompetensi: true,  // Include in form data
                                     studentProfilId: true,
                                   },
                                 },
@@ -190,34 +174,3 @@ export const getFormData = async () => {
     throw new Error("Gagal mengambil data formulir");
   }
 };
-
-// export const createNili = async (data: Prisma.NilaiUncheckedCreateInput) => {
-//   return prisma.nilai.create({ data });
-// };
-// export const getNilaiByKelas = async (kelasId: number, semester: string) => {
-//   return prisma.nilai.findMany({
-//     where: {
-//       MemberKelas: {
-//         Kelas: {
-//           id: kelasId,
-//           semester: semester as any,
-//         },
-//       },
-//     },
-//     include: {
-//       MemberKelas: {
-//         include: { StudentProfil: true },
-//       },
-//       MapelKelas: {
-//         include: { Mapel: true },
-//       },
-//     },
-//   });
-// };
-
-// export const updateNilai = async (id: number, skor: number) => {
-//   return prisma.nilai.update({
-//     where: { id },
-//     data: { skor },
-//   });
-// };

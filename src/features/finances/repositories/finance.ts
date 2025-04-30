@@ -13,7 +13,7 @@ export const createTransaction = async (
       throw new Error("keuanganId tidak ditemukan");
     }
 
-    // Hitung nilai debit dan kredit yang akan diperbarui di keuangan
+    // Perhitungan dibalik: DEBIT mengurangi, KREDIT menambah
     const updatedDebit =
       payload.type === "DEBIT"
         ? existingKeuangan.debit + payload.amount
@@ -24,8 +24,8 @@ export const createTransaction = async (
         ? existingKeuangan.kredit + payload.amount
         : existingKeuangan.kredit;
 
-    // Update total berdasarkan perhitungan debit - kredit
-    const updatedTotal = updatedDebit - updatedKredit;
+    // Update total: Kredit - Debit (dibalik dari sebelumnya Debit - Kredit)
+    const updatedTotal = updatedKredit - updatedDebit;
 
     // Buat transaksi baru
     const createdTransaksi = await prisma.transaksi.create({
@@ -50,7 +50,7 @@ export const createTransaction = async (
         lastTransDate: payload.transDate,
         debit: updatedDebit,
         kredit: updatedKredit,
-        total: updatedTotal,
+        total: updatedTotal, // Total diupdate dengan formula yang sudah dibalik
       },
     });
 

@@ -32,11 +32,11 @@ export const getTransaksiService = async (studentProfileId: number) => {
   let runningTotal = 0;
 
   const formattedTransactions = transactions.map((trx) => {
-    // Update running total berdasarkan type transaksi
+    // Dibalik: DEBIT mengurangi, KREDIT menambah
     if (trx.type === "DEBIT") {
-      runningTotal += trx.amount;
+      runningTotal -= trx.amount; 
     } else if (trx.type === "KREDIT") {
-      runningTotal -= trx.amount;
+      runningTotal += trx.amount; 
     }
 
     return {
